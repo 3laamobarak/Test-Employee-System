@@ -62,16 +62,44 @@ namespace TestEmpolyeeManagment
                 {
                     case "1":
                         Console.Write("Enter Employee Name: ");
-                        string name = Console.ReadLine();
+                        string name;
+                        while (true)
+                        {
+                            name = Console.ReadLine();
+                            if (!string.IsNullOrWhiteSpace(name))
+                                break;
+                            Console.Write("Invalid name. Please enter a valid name: ");
+                        }
 
                         Console.Write("Enter Age: ");
-                        int age = int.Parse(Console.ReadLine());
+                        int age;
+                        while (true)
+                        {
+                            string ageInput = Console.ReadLine();
+                            if (int.TryParse(ageInput, out age) && age >= 18 && age <= 65)
+                                break;
+                            Console.Write("Invalid age. Please enter a number between 18-65: ");
+                        }
 
                         Console.Write("Enter Salary: ");
-                        decimal salary = decimal.Parse(Console.ReadLine());
+                        decimal salary;
+                        while (true)
+                        {
+                            string salaryInput = Console.ReadLine();
+                            if (decimal.TryParse(salaryInput, out salary) && salary > 0)
+                                break;
+                            Console.Write("Invalid salary. Please enter a positive number: ");
+                        }
 
                         Console.Write("Enter Department Name: ");
-                        string deptName = Console.ReadLine();
+                        string deptName;
+                        while (true)
+                        {
+                            deptName = Console.ReadLine();
+                            if (!string.IsNullOrWhiteSpace(deptName))
+                                break;
+                            Console.Write("Invalid department. Please enter a valid name: ");
+                        }
 
                         Department dept = company.Departments.Find(d => d.Name == deptName);
                         if (dept == null)
@@ -91,22 +119,38 @@ namespace TestEmpolyeeManagment
 
                     case "2":
                         Console.Write("Enter Employee Name to Remove: ");
-                        string empName = Console.ReadLine();
+                        string empName;
+                        while (true)
+                        {
+                            empName = Console.ReadLine();
+                            if (!string.IsNullOrWhiteSpace(empName))
+                                break;
+                            Console.Write("Invalid name. Please enter a valid employee name: ");
+                        }
 
-                        Employee employeeToRemove = company.Employees.Find(e => e.Name == empName);
+                        Employee employeeToRemove = company.Employees
+                            .FirstOrDefault(e => e.Name.Equals(empName, StringComparison.OrdinalIgnoreCase));
+
                         if (employeeToRemove != null)
                         {
-                            // Remove employee from the company's employee list
-                            company.RemoveEmployee(employeeToRemove);
+                            Console.Write($"Are you sure you want to remove {employeeToRemove.Name}? (y/n): ");
+                            string confirmation = Console.ReadLine()?.ToLower();
 
-                            // Remove employee from the department's employee list
-                            if (employeeToRemove.Department != null)
+                            if (confirmation == "y" || confirmation == "yes")
                             {
-                                employeeToRemove.Department.employees.Remove(employeeToRemove);
+                                company.RemoveEmployee(employeeToRemove);
+
+                                if (employeeToRemove.Department != null)
+                                {
+                                    employeeToRemove.Department.employees.Remove(employeeToRemove);
+                                }
+
+                                Console.WriteLine("Employee removed successfully.");
                             }
-
-
-                            Console.WriteLine("Employee removed successfully.");
+                            else
+                            {
+                                Console.WriteLine("Employee removal canceled.");
+                            }
                         }
                         else
                         {
@@ -122,14 +166,41 @@ namespace TestEmpolyeeManagment
                     /////////////////////////////////////////////////////////////////
                     case "4":
                         Console.Write("Enter Department Name: ");
-                        string newDeptName = Console.ReadLine();
+                        string newDeptName;
+                        while (true)
+                        {
+                            newDeptName = Console.ReadLine()?.Trim();
 
+                            if (!string.IsNullOrWhiteSpace(newDeptName))
+                            {
+                                bool deptExists = company.Departments
+                                    .Any(d => d.Name.Equals(newDeptName, StringComparison.OrdinalIgnoreCase));
+
+                                if (!deptExists)
+                                    break;
+
+                                Console.Write($"Department '{newDeptName}' already exists. Enter a different name: ");
+                            }
+                            else
+                            {
+                                Console.Write("Invalid department name. Please enter a valid name: ");
+                            }
+                        }
                         Console.Write("Enter Department Head: ");
-                        string deptHead = Console.ReadLine();
+                        string deptHead;
+                        while (true)
+                        {
+                            deptHead = Console.ReadLine()?.Trim();
+                            if (!string.IsNullOrWhiteSpace(deptHead))
+                            {
+                                break;
+                            }
+                            Console.Write("Invalid department head. Please enter a valid name: ");
+                        }
 
                         Department newDept = new Department(newDeptName, deptHead);
                         company.AddDepartment(newDept);
-                        Console.WriteLine("Department added successfully!");
+                        Console.WriteLine($"Department '{newDeptName}' added successfully with head '{deptHead}'!");
                         break;
 
                     ///////////////////////////////////////////////////////////////////

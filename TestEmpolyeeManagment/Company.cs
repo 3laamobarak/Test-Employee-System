@@ -43,8 +43,8 @@ namespace TestEmpolyeeManagment
             {
                 throw new ArgumentException("Employee not found");
             }
-            else Employees.Remove(employee); // ✅ Remove the employee from their department before deletion
-            employee.Department.RemoveEmployee(employee); // ✅ Remove employee from company list (if applicable)
+            else Employees.Remove(employee); 
+            employee.Department.RemoveEmployee(employee);
         }
         public void RemoveDepartment(Department department)
         {
