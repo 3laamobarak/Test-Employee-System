@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\DELL\\Desktop\\ITI\\ezzproject\\TestEmpolyeeManagment\\TestEmpolyeeManagment.csproj": {}
+    "L:\\iti\\c#_oop\\Test-Employee-System\\TestEmpolyeeManagment\\TestEmpolyeeManagment.csproj": {}
   },
   "projects": {
-    "C:\\Users\\DELL\\Desktop\\ITI\\ezzproject\\TestEmpolyeeManagment\\TestEmpolyeeManagment.csproj": {
+    "L:\\iti\\c#_oop\\Test-Employee-System\\TestEmpolyeeManagment\\TestEmpolyeeManagment.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\DELL\\Desktop\\ITI\\ezzproject\\TestEmpolyeeManagment\\TestEmpolyeeManagment.csproj",
+        "projectUniqueName": "L:\\iti\\c#_oop\\Test-Employee-System\\TestEmpolyeeManagment\\TestEmpolyeeManagment.csproj",
         "projectName": "TestEmpolyeeManagment",
-        "projectPath": "C:\\Users\\DELL\\Desktop\\ITI\\ezzproject\\TestEmpolyeeManagment\\TestEmpolyeeManagment.csproj",
-        "packagesPath": "C:\\Users\\DELL\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\DELL\\Desktop\\ITI\\ezzproject\\TestEmpolyeeManagment\\obj\\",
+        "projectPath": "L:\\iti\\c#_oop\\Test-Employee-System\\TestEmpolyeeManagment\\TestEmpolyeeManagment.csproj",
+        "packagesPath": "C:\\Users\\Win11\\.nuget\\packages\\",
+        "outputPath": "L:\\iti\\c#_oop\\Test-Employee-System\\TestEmpolyeeManagment\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\DELL\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Win11\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -26,7 +26,6 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {

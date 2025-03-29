@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace TestEmpolyeeManagment
 {
-    internal class Employee
+    public class Employee
     {
-        int Id;
+        public int Id { get; set; }
         public string Name { get; set; }
-        int Age { get; set; }
+        public int Age { get; set; }
         public decimal Salary { get; set; }
         public int Score { get; set; }
         public Department Department { get; set; }
@@ -37,60 +37,65 @@ namespace TestEmpolyeeManagment
         // promoted Done
         public void promoted(decimal newSalary)
         {
-            if (newSalary.GetType() != typeof(decimal))
-            {
-                throw new ArgumentException("Invalid input");
-            }
-            else if (newSalary <= Salary)
-            {
-                throw new ArgumentException("cant promote with lower or Equal salary");
-            }
-            else
-            {
-                Rank oldrank = rank;
+           
 
-                if (Score >= 0 && Score <= 10)
+                if (newSalary.GetType() != typeof(decimal))
                 {
-                    oldrank = Rank.employee;
+                    Console.WriteLine("Invalid input");
+                    throw new ArgumentException("Invalid input");
                 }
-                else if (Score >= 11 && Score <= 20)
+                else if (newSalary <= Salary)
                 {
-                    oldrank = Rank.manager;
-                }
-                else if (Score >= 21 && Score <= 30)
-                {
-                    oldrank = Rank.executive;
-                }
-                else if (Score >= 31 && Score <= 40)
-                {
-                    oldrank = Rank.director;
-                }
-                else if (Score >= 41 && Score <= 50)
-                {
-                    oldrank = Rank.vicePresident;
-                }
-                else if (Score >= 51 && Score <= 60)
-                {
-                    oldrank = Rank.president;
-                }
-                else if (Score >= 61 && Score <= 70)
-                {
-                    oldrank = Rank.ceo;
+                    Console.WriteLine("cant promote with lower or Equal salary");
+                    throw new ArgumentException("cant promote with lower or Equal salary");
                 }
                 else
                 {
-                    throw new ArgumentException("Invalid score");
+                    Rank oldrank = rank;
+
+                    if (Score >= 0 && Score <= 10)
+                    {
+                        oldrank = Rank.employee;
+                    }
+                    else if (Score >= 11 && Score <= 20)
+                    {
+                        oldrank = Rank.manager;
+                    }
+                    else if (Score >= 21 && Score <= 30)
+                    {
+                        oldrank = Rank.executive;
+                    }
+                    else if (Score >= 31 && Score <= 40)
+                    {
+                        oldrank = Rank.director;
+                    }
+                    else if (Score >= 41 && Score <= 50)
+                    {
+                        oldrank = Rank.vicePresident;
+                    }
+                    else if (Score >= 51 && Score <= 60)
+                    {
+                        oldrank = Rank.president;
+                    }
+                    else if (Score >= 61 && Score <= 70)
+                    {
+                        oldrank = Rank.ceo;
+                    }
+                    else
+                    {
+                        throw new ArgumentException("Invalid score");
+                    }
+                    if (oldrank == Rank.ceo)
+                    {
+                        throw new ArgumentException("Cant promote CEO");
+                    }
+                    Rank newrank = oldrank + 10;
+                    Score = Score + 10;
+                    rank = newrank;
+                    Salary = newSalary;
+                    Console.WriteLine($"Promoted {Name} from {oldrank} to {newrank} with new salary: {newSalary:C}");
                 }
-                if (oldrank == Rank.ceo)
-                {
-                    throw new ArgumentException("Cant promote CEO");
-                }
-                Rank newrank = oldrank + 10;
-                Score = Score + 10;
-                rank = newrank;
-                Salary = newSalary;
-                Console.WriteLine($"Promoted {Name} from {oldrank} to {newrank} with new salary: {newSalary:C}");
-            }
+            
         }
 
 
@@ -111,12 +116,15 @@ namespace TestEmpolyeeManagment
 
         public void PerformanceRating(decimal Rating)
         {
-            if (Rating < 0 || Rating > 5)  // ✅ Allow full range (0 to 5)
-            {
-                throw new ArgumentException("Invalid rating. Must be between 0 and 5.");
-            }
+          
 
-            performance = (performance)(int)Math.Round(Rating); // ✅ Convert to int before casting
+                if (Rating < 0 || Rating > 5)  // ✅ Allow full range (0 to 5)
+                {
+                    throw new ArgumentException("Invalid rating. Must be between 0 and 5.");
+                }
+
+                performance = (performance)(int)Math.Round(Rating); // ✅ Convert to int before casting
+            
         }
 
 
@@ -125,11 +133,16 @@ namespace TestEmpolyeeManagment
 
         public void Transfer(Department department)
         {
-            if (department == null)
-            {
-                throw new ArgumentException("Invalid input");
-            }
-            else Department = department;
+           
+            
+                if (department == null)
+                {
+                    throw new ArgumentException("Invalid input");
+                }
+                else Department = department;
+            
+
+            
         }
 
         public void terminate()

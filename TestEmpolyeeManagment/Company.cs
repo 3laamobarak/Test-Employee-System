@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace TestEmpolyeeManagment
 {
-    internal class Company
+    public class Company
     {
         public List<Employee> Employees { get; private set; }
         public List<Department> Departments { get; private set; }
