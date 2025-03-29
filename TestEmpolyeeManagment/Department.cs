@@ -7,19 +7,31 @@ using TestEmpolyeeManagment;
 
 namespace TestEmpolyeeManagment
 {
-    internal class Department
+    public class Department
     {
         public int Id;
-        public string Name;
-        public string DepartmentHead;
+        public string Name { get; set; }
+        public string DepartmentHead { get; set; }
+        public Statue statue { get; set; }
         public List<Employee> employees = new List<Employee>();
-        public Department(string name, string departmentHead, int id = 0)
+        public Department(string name, string departmentHead, int id = 0, Statue statue = Statue.Active)
         {
             Name = name;
             DepartmentHead = departmentHead;
             employees = new List<Employee>();
             Id = id != 0 ? id : GetHashCode();
+            this.statue = statue;
         }
+
+        public void terminate()
+        {
+            if (statue == Statue.Terminated)
+            {
+                throw new ArgumentException("Department already terminated");
+            }
+            else statue = Statue.Terminated;
+        }
+
         public void AddEmployee(Employee employee)
         {
             if (employee == null)

@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace TestEmpolyeeManagment
 {
-    internal class Employee
+    public class Employee
     {
-        int Id;
+        public int Id { get; set; }
         public string Name { get; set; }
-        int Age { get; set; }
+        public int Age { get; set; }
         public decimal Salary { get; set; }
         public int Score { get; set; }
         public Department Department { get; set; }
