@@ -107,10 +107,15 @@ namespace TestEmpolyeeManagment
                 }
             }
         }
+       
         public override string ToString()
         {
-            return $"ID:{Id} ,Name: {Name}, Department Head: {DepartmentHead}, Number of Employees: ({this.employees.Count})";
+            return $"ID: {Id}, Name: {Name}, " +
+                   $"Department Head: {DepartmentHead}, " +
+                   $"Number of Employees: {employees.Count}\n" +
+                   $"Employees:\n{string.Join("\n", employees)}";
         }
+
 
     }
 }
