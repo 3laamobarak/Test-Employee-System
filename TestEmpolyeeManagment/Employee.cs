@@ -10,7 +10,7 @@ namespace TestEmpolyeeManagment
     internal class Employee
     {
         int Id;
-        string Name { get; set; }
+        public string Name { get; set; }
         int Age { get; set; }
         public decimal Salary { get; set; }
         public int Score { get; set; }
@@ -32,6 +32,7 @@ namespace TestEmpolyeeManagment
             performance = performance.Fair;
             Score = score;
             this.rank = rank;
+           department.employees.Add(this); // ✅ Add employee to the department list
         }
         // promoted Done
         public void promoted(decimal newSalary)
@@ -40,14 +41,14 @@ namespace TestEmpolyeeManagment
             {
                 throw new ArgumentException("Invalid input");
             }
-            else if(newSalary <= Salary)
+            else if (newSalary <= Salary)
             {
                 throw new ArgumentException("cant promote with lower or Equal salary");
             }
             else
             {
                 Rank oldrank = rank;
-                
+
                 if (Score >= 0 && Score <= 10)
                 {
                     oldrank = Rank.employee;
@@ -80,41 +81,60 @@ namespace TestEmpolyeeManagment
                 {
                     throw new ArgumentException("Invalid score");
                 }
-                if(oldrank == Rank.ceo)
+                if (oldrank == Rank.ceo)
                 {
                     throw new ArgumentException("Cant promote CEO");
                 }
                 Rank newrank = oldrank + 10;
+                Score = Score + 10;
                 rank = newrank;
                 Salary = newSalary;
                 Console.WriteLine($"Promoted {Name} from {oldrank} to {newrank} with new salary: {newSalary:C}");
             }
         }
- 
+
+
+
+        //public void PerformanceRating(decimal Rating)
+        //{
+        //    if(Rating.GetType() != typeof(decimal))
+        //    {
+        //        throw new ArgumentException("Invalid input");
+        //    }
+        //    else if (Rating <= 0 || Rating >= 5)
+        //    {
+        //        throw new ArgumentException("Invalid rating");
+        //    }
+        //    performance = (performance)Rating;
+
+        //}
+
         public void PerformanceRating(decimal Rating)
         {
-            if(Rating.GetType() != typeof(decimal))
+            if (Rating < 0 || Rating > 5)  // ✅ Allow full range (0 to 5)
             {
-                throw new ArgumentException("Invalid input");
+                throw new ArgumentException("Invalid rating. Must be between 0 and 5.");
             }
-            else if (Rating <= 0 || Rating >= 5)
-            {
-                throw new ArgumentException("Invalid rating");
-            }
-            performance = (performance)Rating;
-            
+
+            performance = (performance)(int)Math.Round(Rating); // ✅ Convert to int before casting
         }
+
+
+
+
+
         public void Transfer(Department department)
         {
-            if(department == null)
+            if (department == null)
             {
                 throw new ArgumentException("Invalid input");
             }
             else Department = department;
         }
+
         public void terminate()
         {
-            if(statue == Statue.Terminated)
+            if (statue == Statue.Terminated)
             {
                 throw new ArgumentException("Employee already terminated");
             }
@@ -140,6 +160,7 @@ namespace TestEmpolyeeManagment
         }
         public override string ToString()
         {
+
             return $"Id: {Id}, Name: {Name}, Salary: {Salary:C}, " +
                    $"Department: {Department.Name}, Statue: {statue}, Rank: {rank}, Performance :{performance}";
         }

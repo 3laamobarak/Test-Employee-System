@@ -49,7 +49,7 @@ namespace TestEmpolyeeManagment
             {
                 throw new ArgumentException("Employee not found");
             }
-            else employees.Remove(employee);
+            else this.employees.Remove(employee);
         }
         public void showEmployees()
         {
@@ -109,7 +109,7 @@ namespace TestEmpolyeeManagment
         }
         public override string ToString()
         {
-            return $"ID:{Id} ,Name: {Name}, Department Head: {DepartmentHead}, Number of Employees: ({employees.Count})";
+            return $"ID:{Id} ,Name: {Name}, Department Head: {DepartmentHead}, Number of Employees: ({this.employees.Count})";
         }
 
     }

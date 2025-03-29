@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("TestEmpolyeeManagment")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0de03b645446bc6ee5df90ac650534cb7a2e1b8c")]
 [assembly: System.Reflection.AssemblyProductAttribute("TestEmpolyeeManagment")]
 [assembly: System.Reflection.AssemblyTitleAttribute("TestEmpolyeeManagment")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
