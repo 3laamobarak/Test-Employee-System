@@ -32,18 +32,10 @@ namespace TestEmpolyeeManagment
         static void Main(string[] args)
         {
 
-<<<<<<< HEAD
-            Company company = new Company(new List<Employee>(), new List<Department>());
-            bool running = true; // Keeps the program running
-
-            while (running)
-                
-=======
             Data.LoadData();
             bool checkWrite= false;
 
             while (true)
->>>>>>> 8ee5043224366911ac6bd312a84c8e27706fa477
             {
                 checkWrite = false;
                 // Print the header
@@ -74,132 +66,155 @@ namespace TestEmpolyeeManagment
 
                 string choice = Console.ReadLine();
 
-                try
+                switch (choice)
                 {
-                    switch (choice)
-                    {
-                        case "1":
-                            Console.Write("Enter Employee Name: ");
-                            string name = Console.ReadLine();
+                    case "1":
+                        Console.Write("Enter Employee Name: ");  
+                        string name;  
+                        while (true)  
+                        {  
+                            name = Console.ReadLine();  
+                            if (!string.IsNullOrWhiteSpace(name))  
+                                break;  
+                            Console.Write("Invalid name. Please enter a valid name: ");  
+                        }  
 
-<<<<<<< HEAD
-                            Console.Write("Enter Age: ");
-                            int age = int.Parse(Console.ReadLine());
+                        // Age Validation  
+                        Console.Write("Enter Age: ");  
+                        int age;  
+                        while (true)  
+                        {  
+                            string ageInput = Console.ReadLine();  
+                            if (int.TryParse(ageInput, out age) && age >= 18 && age <= 65)  
+                                break;  
+                            Console.Write("Invalid age. Please enter a number between 18-65: ");  
+                        }  
 
-                            Console.Write("Enter Salary: ");
-                            decimal salary = decimal.Parse(Console.ReadLine());
-=======
-                        Console.Write("Enter Age: ");
-                        //int age = 0;
-                        if (int.TryParse(Console.ReadLine(), out int age) && age < 18)
-                        {
-                            Console.ForegroundColor = ConsoleColor.Red;
-                            Console.WriteLine("Employee must be at least 18 years old.");
-                            Console.ResetColor();
-                            break;
-                        }
+                        // Salary Validation  
+                        Console.Write("Enter Salary: ");  
+                        decimal salary;  
+                        while (true)  
+                        {  
+                            string salaryInput = Console.ReadLine();  
+                            if (decimal.TryParse(salaryInput, out salary) && salary > 0)  
+                                break;  
+                            Console.Write("Invalid salary. Please enter a positive number: ");  
+                        }  
 
-                        Console.Write("Enter Salary: ");
-                        //decimal salary = decimal.Parse(Console.ReadLine());
-                        if (decimal.TryParse(Console.ReadLine(), out decimal salary) && salary < 0)
-                        {
-                            Console.ForegroundColor = ConsoleColor.Red;
-                            Console.WriteLine("Salary must be a positive number.");
-                            Console.ResetColor();
-                           
-                            break;
-                        }
->>>>>>> 8ee5043224366911ac6bd312a84c8e27706fa477
+                        // Department Validation  
+                        Console.Write("Enter Department Name: ");  
+                        string deptName;  
+                        while (true)  
+                        {  
+                            deptName = Console.ReadLine();  
+                            if (!string.IsNullOrWhiteSpace(deptName))  
+                                break;  
+                            Console.Write("Invalid department. Please enter a valid name: ");  
+                        }  
 
-                            Console.Write("Enter Department Name: ");
-                            string deptName = Console.ReadLine();
+                        Department dept = company.Departments.Find(d => d.Name == deptName);  
+                        if (dept == null)  
+                        {  
+                            Console.WriteLine("Department not found.");  
+                            break;  
+                        }  
 
-<<<<<<< HEAD
-                            Department dept = company.Departments.Find(d => d.Name == deptName);
-                            if (dept == null)
-=======
-                        Department dept = company.Departments.Find(d => d.Name == deptName);
-                        if (dept == null)
-                        {
-                            Console.ForegroundColor = ConsoleColor.Red;
-                            Console.WriteLine("Department not found.");
-                            Console.ResetColor();
-                            break;
-                        }
-
-                        Employee emp = new Employee(company.Employees.Count+1, name, age, salary, dept);
-
-                        company.AddEmployee(emp); // Manually add to company
-
-                        Console.WriteLine("Employee added successfully!");
-                        checkWrite = true;
+                        Employee emp = new Employee(0, name, age, salary, dept);  
+                        company.AddEmployee(emp);  
+                        Console.WriteLine("Employee added successfully!");  
                         break;
 
                     //////////////////////////////////////////////////////////////////////////////////////////
 
                     case "2":
-                        Console.Write("Enter Employee Name to Remove: ");
-                        string empName = Console.ReadLine();
+                        Console.Write("Enter Employee Name to Remove: ");  
+                        string empName;  
+                        while (true)  
+                        {  
+                            empName = Console.ReadLine();  
+                            if (!string.IsNullOrWhiteSpace(empName))  
+                                break;  
+                            Console.Write("Invalid name. Please enter a valid employee name: ");  
+                        }  
 
-                        Employee employeeToRemove = company.Employees.Find(e => e.Name == empName);
-                        if (employeeToRemove != null)
-                        {
-                            // Remove employee from the company's employee list
-                            company.RemoveEmployee(employeeToRemove);
+                        // Case-insensitive search with StringComparison.OrdinalIgnoreCase  
+                        Employee employeeToRemove = company.Employees  
+                            .FirstOrDefault(e => e.Name.Equals(empName, StringComparison.OrdinalIgnoreCase));  
 
-                            // Remove employee from the department's employee list
-                            if (employeeToRemove.Department != null)
->>>>>>> 8ee5043224366911ac6bd312a84c8e27706fa477
+                        if (employeeToRemove != null)  
+                        {  
+                            // Confirmation prompt  
+                            Console.Write($"Are you sure you want to remove {employeeToRemove.Name}? (y/n): ");  
+                            string confirmation = Console.ReadLine()?.ToLower();  
+
+                            if (confirmation == "y" || confirmation == "yes")  
+                            {  
+                                company.RemoveEmployee(employeeToRemove);  
+
+                                if (employeeToRemove.Department != null)  
+                                {  
+                                    employeeToRemove.Department.employees.Remove(employeeToRemove);  
+                                }  
+
+                                Console.WriteLine("Employee removed successfully.");  
+                            }  
+                            else  
+                            {  
+                                Console.WriteLine("Employee removal canceled.");  
+                            }  
+                        }  
+                        else  
+                        {  
+                            Console.WriteLine("Employee not found.");  
+                        }  
+                        break;  
+
+                    ////////////////////////////////////////////////////////////////
+                    case "3":
+                        company.showEmployees();
+                        break;
+
+                    /////////////////////////////////////////////////////////////////
+                    case "4":
+                        Console.Write("Enter Department Name: ");  
+                        string newDeptName;  
+                        while (true)  
+                        {  
+                            newDeptName = Console.ReadLine()?.Trim();  
+        
+                            if (!string.IsNullOrWhiteSpace(newDeptName))  
+                            {  
+                                // Check if department already exists (case-insensitive)  
+                                bool deptExists = company.Departments  
+                                    .Any(d => d.Name.Equals(newDeptName, StringComparison.OrdinalIgnoreCase));  
+            
+                                if (!deptExists)  
+                                    break;  
+                
+                                Console.Write($"Department '{newDeptName}' already exists. Enter a different name: ");  
+                            }  
+                            else  
+                            {  
+                                Console.Write("Invalid department name. Please enter a valid name: ");  
+                            }  
+                        }  
+
+                        Console.Write("Enter Department Head: ");  
+                        string deptHead;  
+                        while (true)  
+                        {  
+                            deptHead = Console.ReadLine()?.Trim();  
+                            if (!string.IsNullOrWhiteSpace(deptHead))  
                             {
-                                Console.WriteLine("Department not found.");
-                                break;
-                            }
+                                break;  
+                            }  
+                            Console.Write("Invalid department head. Please enter a valid name: ");  
+                        }  
 
-<<<<<<< HEAD
-                            Employee emp = new Employee(0, name, age, salary, dept);
-
-                            company.AddEmployee(emp); // Manually add to company
-=======
-                            Console.ForegroundColor = ConsoleColor.Green;
-                            Console.WriteLine("Employee removed successfully.");
-                            Console.ResetColor();
-                         
-                            checkWrite = true;
-                        }
-                        else
-                        {
-                            Console.ForegroundColor = ConsoleColor.Red;
-                            Console.WriteLine("Employee not found.");
-                            Console.ResetColor();
-                     
-                        }
-                        break;
->>>>>>> 8ee5043224366911ac6bd312a84c8e27706fa477
-
-                            Console.WriteLine("Employee added successfully!");
-                            break;
-
-                        //////////////////////////////////////////////////////////////////////////////////////////
-
-                        case "2":
-                            Console.Write("Enter Employee Name to Remove: ");
-                            string empName = Console.ReadLine();
-
-<<<<<<< HEAD
-                            Employee employeeToRemove = company.Employees.Find(e => e.Name == empName);
-                            if (employeeToRemove != null)
-=======
-                        Department newDept = new Department(newDeptName, deptHead);
-                        company.AddDepartment(newDept);
-
-
-                        Console.ForegroundColor = ConsoleColor.Green;
-                        Console.WriteLine("Department added successfully!");
-                        Console.ResetColor();
-                        
-                        checkWrite = true;
-                        break;
-
+                        Department newDept = new Department(newDeptName, deptHead);  
+                        company.AddDepartment(newDept);  
+                        Console.WriteLine($"Department '{newDeptName}' added successfully with head '{deptHead}'!");  
+                        break;  
                     ///////////////////////////////////////////////////////////////////
                     case "5":
                         Console.Write("Enter Department Name to Remove: ");
@@ -264,62 +279,26 @@ namespace TestEmpolyeeManagment
 
                             Department transferDept = company.Departments.Find(d => d.Name == newDeptTransfer);
                             if (transferDept != null)
->>>>>>> 8ee5043224366911ac6bd312a84c8e27706fa477
                             {
-                                // Remove employee from the company's employee list
-                                company.RemoveEmployee(employeeToRemove);
-
-                                // Remove employee from the department's employee list
-                                if (employeeToRemove.Department != null)
+                                // Remove employee from the old department
+                                foreach (var deptt in company.Departments)
                                 {
-                                    employeeToRemove.Department.employees.Remove(employeeToRemove);
+                                    if (deptt.employees.Contains(transferEmp))
+                                    {
+                                        deptt.employees.Remove(transferEmp);
+                                        break; // Exit loop once found
+                                    }
                                 }
 
+                                // Transfer employee to the new department
+                                transferEmp.Transfer(transferDept);
+                                transferDept.employees.Add(transferEmp);
 
-<<<<<<< HEAD
-                                Console.WriteLine("Employee removed successfully.");
-                            }
-                            else
-                            {
-                                Console.WriteLine("Employee not found.");
-                            }
-                            break;
-
-                        ////////////////////////////////////////////////////////////////
-                        case "3":
-                            company.showEmployees();
-                            break;
-
-                        /////////////////////////////////////////////////////////////////
-                        case "4":
-                            Console.Write("Enter Department Name: ");
-                            string newDeptName = Console.ReadLine();
-
-                            Console.Write("Enter Department Head: ");
-                            string deptHead = Console.ReadLine();
-
-                            Department newDept = new Department(newDeptName, deptHead);
-                            company.AddDepartment(newDept);
-                            Console.WriteLine("Department added successfully!");
-                            break;
-
-                        ///////////////////////////////////////////////////////////////////
-                        case "5":
-                            Console.Write("Enter Department Name to Remove: ");
-                            string removeDeptName = Console.ReadLine();
-
-                            Department departmentToRemove = company.Departments.Find(d => d.Name == removeDeptName);
-                            if (departmentToRemove != null)
-                            {
-                                company.RemoveDepartment(departmentToRemove);
-                                Console.WriteLine("Department removed successfully.");
-=======
                                 
                                 Console.ForegroundColor = ConsoleColor.Green;
                                 Console.WriteLine("Employee transferred successfully.");
                                 Console.ResetColor();
                                 checkWrite = true;
->>>>>>> 8ee5043224366911ac6bd312a84c8e27706fa477
                             }
                             else
                             {
@@ -329,103 +308,6 @@ namespace TestEmpolyeeManagment
                                 Console.ResetColor();
                                 
                             }
-<<<<<<< HEAD
-
-                            break;
-
-                        ///////////////////////////////////////////////////////////////////////
-                        case "6":
-                            company.showDepartments();
-                            break;
-                        ////////////////////////////////////////////////////////////////////////
-                        case "7":
-                            Console.Write("Enter Employee Name to Promote: ");
-                            string promoteName = Console.ReadLine();
-
-                            Employee promoteEmp = company.Employees.Find(e => e.Name == promoteName);
-                            if (promoteEmp != null)
-                            {
-                                Console.Write("Enter New Salary: ");
-                                decimal newSalary = decimal.Parse(Console.ReadLine());
-                                promoteEmp.promoted(newSalary);
-                            }
-                            else
-                            {
-                                Console.WriteLine("Employee not found.");
-                            }
-                            break;
-                        /////////////////////////////////////////////////////////////////////////////
-
-                        //case "8":
-                        //    Console.Write("Enter Employee Name to Transfer: ");
-                        //    string transferName = Console.ReadLine();
-
-                        //    Employee transferEmp = company.Employees.Find(e => e.Name == transferName);
-                        //    if (transferEmp != null)
-                        //    {
-                        //        Console.Write("Enter New Department: ");
-                        //        string newDeptTransfer = Console.ReadLine();
-
-                        //        Department transferDept = company.Departments.Find(d => d.Name == newDeptTransfer);
-                        //        if (transferDept != null)
-                        //        {
-                        //            transferEmp.Transfer(transferDept);
-                        //            Console.WriteLine("Employee transferred successfully.");
-                        //        }
-                        //        else
-                        //        {
-                        //            Console.WriteLine("Department not found.");
-                        //        }
-                        //    }
-                        //    else
-                        //    {
-                        //        Console.WriteLine("Employee not found.");
-                        //    }
-                        //    break;
-
-                        case "8":
-                            Console.Write("Enter Employee Name to Transfer: ");
-                            string transferName = Console.ReadLine();
-
-                            Employee transferEmp = company.Employees.Find(e => e.Name == transferName);
-                            if (transferEmp != null)
-                            {
-                                Console.Write("Enter New Department: ");
-                                string newDeptTransfer = Console.ReadLine();
-
-                                Department transferDept = company.Departments.Find(d => d.Name == newDeptTransfer);
-                                if (transferDept != null)
-                                {
-                                    // Remove employee from the old department
-                                    foreach (var deptt in company.Departments)
-                                    {
-                                        if (deptt.employees.Contains(transferEmp))
-                                        {
-                                            deptt.employees.Remove(transferEmp);
-                                            break; // Exit loop once found
-                                        }
-                                    }
-
-                                    // Transfer employee to the new department
-                                    transferEmp.Transfer(transferDept);
-                                    transferDept.employees.Add(transferEmp);
-
-                                    Console.WriteLine("Employee transferred successfully.");
-                                }
-                                else
-                                {
-                                    Console.WriteLine("Department not found.");
-                                }
-                            }
-                            else
-                            {
-                                Console.WriteLine("Employee not found.");
-                            }
-                            break;
-
-
-                        ////////////////////////////////////////////////////////////////////////////////
-=======
                         }
                         else
                         {
@@ -437,58 +319,11 @@ namespace TestEmpolyeeManagment
                         break;
 
                     ////////////////////////////////////////////////////////////////////////////////
->>>>>>> 8ee5043224366911ac6bd312a84c8e27706fa477
 
-                        case "9":
-                            Console.Write("Enter Employee Name to Terminate: ");
-                            string terminateName = Console.ReadLine();
+                    case "9":
+                        Console.Write("Enter Employee Name to Terminate: ");
+                        string terminateName = Console.ReadLine();
 
-<<<<<<< HEAD
-                            Employee terminateEmp = company.Employees.Find(e => e.Name == terminateName);
-                            if (terminateEmp != null)
-                            {
-                                terminateEmp.terminate();
-                                Console.WriteLine("Employee terminated successfully.");
-                            }
-                            else
-                            {
-                                Console.WriteLine("Employee not found.");
-                            }
-                            break;
-                        ///////////////////////////////////////////////////////////////////////////////////
-                        case "10":
-                            Console.Write("Enter Employee Name for Review: ");
-                            string reviewEmpName = Console.ReadLine();
-                            Employee reviewEmp = company.Employees.Find(e => e.Name == reviewEmpName);
-                            if (reviewEmp != null)
-                            {
-                                Console.Write("Enter Performance Rating (1-5): ");
-                                int rating = int.Parse(Console.ReadLine());
-                                PerformanceReview review = new PerformanceReview(reviewEmp, (performance)rating, "Annual Review", DateTime.Now);
-                                reviewEmp.PerformanceRating(rating);
-                                Console.WriteLine("Performance review added successfully.");
-                            }
-                            else
-                            {
-                                Console.WriteLine("Employee not found.");
-                            }
-                            break;
-                        /////////////////////////////////////////////////////////////////////////////////////
-
-                        case "11":
-                            Console.WriteLine("Exiting program...");
-                            return;
-
-                        default:
-                            Console.WriteLine("Invalid choice. Please enter a valid option.");
-                            break;
-                    }
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine("{ex.Message}");
-                    // The loop continues instead of crashing
-=======
                         Employee terminateEmp = company.Employees.Find(e => e.Name == terminateName);
                         if (terminateEmp != null)
                         {
@@ -567,7 +402,6 @@ namespace TestEmpolyeeManagment
                         Console.ResetColor();
                         
                         break;
->>>>>>> 8ee5043224366911ac6bd312a84c8e27706fa477
                 }
 
                 if (checkWrite)
